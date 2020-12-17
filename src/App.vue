@@ -1,19 +1,29 @@
+
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
-  </div>
+  <v-app id="inspire">
+    <back-option></back-option>
+    <message-list></message-list>
+  </v-app>
 </template>
 
-<style lang="stylus">
-#app
-  font-family Avenir, Helvetica, Arial, sans-serif
-  -webkit-font-smoothing antialiased
-  -moz-osx-font-smoothing grayscale
-  text-align center
-  color #2c3e50
-  margin-top 60px
-</style>
+<script>
+import BackOption from './components/option.vue'
+import MessageList from './components/MessageList.vue'
+export default {
+  name: 'App',
+  components: {
+    BackOption,
+    MessageList
+  },
+  data: () => ({
+    cards: ['Today', 'Yesterday'],
+    drawer: null,
+    links: [
+      ['mdi-inbox-arrow-down', 'Inbox'],
+      ['mdi-send', 'Send'],
+      ['mdi-delete', 'Trash'],
+      ['mdi-alert-octagon', 'Spam']
+    ]
+  })
+}
+</script>
