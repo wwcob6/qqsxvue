@@ -8,7 +8,7 @@
         <v-col
           v-for="(item, index) of dateList"
           :key="index"
-          cols="12"
+          cols="6"
         >
           <v-card>
             <v-subheader>社区帖子</v-subheader>
@@ -21,7 +21,7 @@
                   <v-list-item-avatar color="grey darken-1">
                   </v-list-item-avatar>
                   <v-list-item-content>
-                    <v-list-item-title class="mb-4">帖子 {{ message.id }}</v-list-item-title>
+                    <v-list-item-title class="mb-4">帖子id {{ message.id }}</v-list-item-title>
                     <v-list-item-subtitle class="mb-2">
                        帖子内容: {{message.content}}
                     </v-list-item-subtitle>
@@ -33,6 +33,8 @@
                     </v-list-item-subtitle>
                     <v-btn  elevation="2" small>修改</v-btn>
                     <v-btn @click="deletebtn(message.id)" elevation="2" small class="ml-3">删除</v-btn>
+                    <delete-dialog :contentId="message.id"></delete-dialog>
+                    <delete-dialog></delete-dialog>
                   </v-list-item-content>
                 </v-list-item>
 <!--                <v-divider-->
@@ -50,13 +52,19 @@
 </template>
 
 <script>
+import DeleteDialog from './deleteDialog'
 import axios from 'axios'
 export default {
   name: 'MessageList',
   data: () => ({
     cards: ['Today', 'Yesterday'],
-    dateList: []
+    dateList: [],
+    listLength: '',
+    contentId: ''
   }),
+  components: {
+    DeleteDialog
+  },
   methods: {
     getUserInfo: function () {
       axios.get('/api/getUserInfo')
@@ -81,7 +89,11 @@ export default {
         .catch((res) => {
           console.log('删除失败')
         })
+      alert('删除成功')
     }
+  },
+  beforeUpdate () {
+    this.getUserInfo()
   },
   mounted () {
     this.getUserInfo()
